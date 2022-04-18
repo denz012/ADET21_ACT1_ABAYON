@@ -1,0 +1,134 @@
+import 'dart:io';
+
+File pin = new  File ('C:\\Users\\admin\\Desktop\\ATMDataBase\\pinCode.txt');
+String pinCode = pin.readAsStringSync();
+
+var bal = new  File ('C:\\Users\\admin\\Desktop\\ATMDataBase\\balance.txt');
+String balance = bal.readAsStringSync();
+int balInt = int.parse(balance);
+
+
+void main()
+{
+    //ASSUMING THE ATM IS INSERTED
+    print('WELCOME');
+
+    for(int x = 3; x>=1; x--)
+    {
+        stdout.write('PLEASE ENTER YOU PINCODE, YOU HAVE ');
+        print(x);
+        String? pinEnter = stdin.readLineSync();
+
+
+        if(pinCode == pinEnter)
+        {
+            print('WELCOME 235689');
+            choose();
+            exit(0);
+
+        }
+    }
+
+
+}
+
+void choose()
+{
+
+
+    for(int x = 0; x<=5; x++)
+    {
+
+        print('(1). WITHDRAW');
+        print('(2). PIN CHANGE');
+        print('(3). BALANCE INQUIRY');
+        print('(0). EXIT');
+
+        print('PICK YOUR CHOICE');
+        String? chose = stdin.readLineSync();
+
+        if(chose == '1')
+        {
+            withdraw();
+            exit(0);
+        }
+        else if(chose == '2')
+        {
+            pinChange();
+            exit(0);
+        }
+        else if(chose == '3')
+        {
+            balanceInq();
+            exit(0);
+        }
+        else if(chose == '0')
+        {
+            exit(0);
+        }else{
+            print('None of the Choices');
+
+        }
+    }
+}
+
+void balanceInq()
+{
+    stdout.write("Your're Current Balance is ");
+    print(balance);
+
+    print('Do you want to make another Transaction? Yes or No');
+    String? pick = stdin.readLineSync();
+    //int choice = int.parse(pick!);
+
+    if(pick == 'Yes' || pick == 'yes')
+    {
+        choose();
+    }else{
+        exit(0);
+    }
+}
+
+void pinChange()
+{
+    print('Enter Your new Pin Code: ');
+    String? newPin = stdin.readLineSync();
+    pin.writeAsStringSync(newPin!);
+
+    print('New pin Successful');
+}
+
+void withdraw()
+{
+    for(int x = 1; x <= 5; x++)
+    {
+        print('Enter How Much do you want to Withdraw');
+        String? cOut = stdin.readLineSync();
+        int cashOut = int.parse(cOut!);
+
+        if(cashOut > balInt)
+        {
+            print('Not Enough Balance');
+
+        }else if(balInt > cashOut)
+        {
+            int totalBalance = (balInt - cashOut);
+            stdout.write('Withdrawal Successful');
+            stdout.write('Your New Balance = ');
+            print(totalBalance);
+
+            //int nTotalBalance = totalBalance
+
+            String txtTotalBalance = totalBalance.toString();
+            bal.writeAsStringSync(txtTotalBalance);
+
+            exit(0);
+        }
+
+    }
+
+}
+
+
+
+
